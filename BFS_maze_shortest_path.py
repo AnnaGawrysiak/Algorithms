@@ -1,5 +1,6 @@
 from pyamaze import maze,agent
 from queue import Queue
+import math
 
 
 # def create_maze(start_label, end_label):
@@ -17,43 +18,61 @@ from queue import Queue
 #     m.run()
 #     return m
 
+# 1 -można iść
 
 def go_up(node, maze):
 
-    if node[1] == 1:
+    if node[0] == 1:
         return None
     #print('upper Node')
     #print(upper_node)
-    #if upper_node in maze: #and maze[node]['N'] == 1:
-    possible_directions = maze.get(node)
+
     possible_going_up = maze[node]['N']
     if possible_going_up:
-        upper_node = (node[0], node[1] - 1)
+        upper_node = (node[0]-1, node[1])
         return upper_node
     else:
         return None
 
 
 def go_down(node, maze):
-    upper_node = (node[0], node[1] + 1)
-    if upper_node in maze and maze[node]['S'] == 1:
-        return upper_node
+
+    if node[0] == 10:
+        return None
+
+    possible_going_down = maze[node]['S']
+
+    if possible_going_down:
+        lower_node = (node[0] +1 , node[1])
+        return lower_node
     else:
         return None
 
 
 def go_left(node, maze):
-    upper_node = (node[0]-1, node[1])
-    if upper_node in maze and maze[node]['W'] == 1:
-        return upper_node
+
+    if node[1] == 1:
+        return None
+
+    possible_going_left = maze[node]['W']
+
+    if possible_going_left:
+        left_node = (node[0], node[1]-1)
+        return left_node
     else:
         return None
 
 
 def go_right(node, maze):
-    upper_node = (node[0]+1, node[1])
-    if upper_node in maze and maze[node]['E'] == 1:
-        return upper_node
+
+    if node[1] == 10:
+        return None
+
+    possible_going_right = maze[node]['E']
+
+    if possible_going_right:
+        right_node = (node[0], node[1]+1)
+        return right_node
     else:
         return None
 
@@ -112,14 +131,14 @@ def bfs(start_node, target_node, maze):
 if __name__ == '__main__':
 
     start_node = (1, 1)
-    end_node = (9, 9)
+    end_node = (10, 10)
 
     m = maze(10, 10)
     m.CreateMaze(loopPercent=50)
     a = agent(m, filled=True, footprints=True)
 
     maze_map = m.maze_map
-    #print(m.maze_map)
+    print(m.maze_map)
 
     #maze_map1 = {(1, 1): {'E': 0, 'W': 0, 'N': 0, 'S': 1}, (2, 1): {'E': 1, 'W': 0, 'N': 1, 'S': 0}, (3, 1): {'E': 1, 'W': 0, 'N': 0, 'S': 1}, (4, 1): {'E': 0, 'W': 0, 'N': 1, 'S': 1}, (5, 1): {'E': 1, 'W': 0, 'N': 1, 'S': 1}, (6, 1): {'E': 1, 'W': 0, 'N': 1, 'S': 0}, (7, 1): {'E': 1, 'W': 0, 'N': 0, 'S': 1}, (8, 1): {'E': 0, 'W': 0, 'N': 1, 'S': 1}, (9, 1): {'E': 0, 'W': 0, 'N': 1, 'S': 1}, (10, 1): {'E': 1, 'W': 0, 'N': 1, 'S': 0},
                 # (1, 2): {'E': 1, 'W': 0, 'N': 0, 'S': 1}, (2, 2): {'E': 0, 'W': 1, 'N': 1, 'S': 1}, (3, 2): {'E': 1, 'W': 1, 'N': 1, 'S': 1}, (4, 2): {'E': 1, 'W': 0, 'N': 1, 'S': 1}, (5, 2): {'E': 0, 'W': 1, 'N': 1, 'S': 0}, (6, 2): {'E': 1, 'W': 1, 'N': 0, 'S': 0}, (7, 2): {'E': 1, 'W': 1, 'N': 0, 'S': 1}, (8, 2): {'E': 0, 'W': 0, 'N': 1, 'S': 1}, (9, 2): {'E': 1, 'W': 0, 'N': 1, 'S': 1}, (10, 2): {'E': 1, 'W': 1, 'N': 1, 'S': 0},
@@ -138,6 +157,8 @@ if __name__ == '__main__':
 
     for coordinates in path:
         a.position = coordinates
+
+    #a.position = (10, 9)
 
     m.run()
 
