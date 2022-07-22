@@ -26,7 +26,6 @@ def cheapest_flight(flights, src, dst, k):
     pq = [(0, src)]
 
     while pq:
-        print(pq)
         # get the root, discard current distance
         curr_price, current_vertex = hq.heappop(pq)
         # if the node is visited, skip
@@ -35,8 +34,6 @@ def cheapest_flight(flights, src, dst, k):
 
         if current_vertex == dst:
             return vertex_price_prev[current_vertex][0]
-
-        print(f"curr {current_vertex}")
 
         # set the node to visited
         visited.append(current_vertex)
